@@ -6,28 +6,35 @@ import {auth} from '../../firebase-utils/firebase'
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 
-const Header =({currentUser}) => (
-
+const Header = ({ currentUser }) => (
     <div className='header'>
-    
-        <Link className='logo-container' to='/'>
-            <Logo className='logo' />
+      <Link className='logo-container' to='/'>
+        <Logo className='logo' />
+      </Link>
+      <div className='options'>
+        <Link className='option' to='/shop'>
+          SHOP
+        </Link>
+        <Link className='option' to='/shop'>
+          CONTACT
         </Link>
 
-
-        <div className='options'>
-            <Link className='option' to='/shop'>SHOP</Link>
-            <Link className='option' to='/shop'>CONTACT</Link>
-            {console.log(`The current user object ${currentUser}`)}
-            {currentUser === null? <Link className='option' to='/auth'>SignIn</Link> : <Link className='option' onClick={() => (auth.signOut())}>Sign Out</Link>}
-
-        </div>
+            {console.log('checking the user')}
+           { console.log(currentUser)}
+        
+        {currentUser ? (
+          <Link className='option' to='/auth' onClick={()=>{
+              auth.signOut();
+          }}>
+            SIGN OUT
+          </Link>
+        ) : (
+          <Link className='option' to='/auth'>
+            SIGN IN
+          </Link>
+        )}
+      </div>
     </div>
-
-
-
-);
-
-
+  );
 export default Header;
 
